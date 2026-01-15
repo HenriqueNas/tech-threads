@@ -1,5 +1,5 @@
 {
-  "name": "clone-tabnews",
+  "name": "tech-threads",
   "version": "1.0.0",
   "description": "Um projeto pra eu estudar juntinho com o Filipe Deschamps",
   "main": "index.js",
@@ -9,9 +9,9 @@
     "lint:fix": "prettier --write .",
     "test": "pnpm jest --runInBand",
     "test:watch": "pnpm jest --watch --runInBand",
-    "services:up": "docker compose -f infra/compose.yaml up -d",
-    "services:stop": "docker compose -f infra/compose.yaml stop",
-    "services:down": "docker compose -f infra/compose.yaml down",
+    "services:up": "docker-compose -f infra/compose.yaml up -d",
+    "services:stop": "docker-compose -f infra/compose.yaml stop",
+    "services:down": "docker-compose -f infra/compose.yaml down",
     "migration:create": "node-pg-migrate -m infra/migrations create",
     "migration:up": "node-pg-migrate -m infra/migrations --envPath .env.development up"
   },
