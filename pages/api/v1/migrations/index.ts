@@ -6,18 +6,17 @@ import { join } from 'node:path';
 import database from '@infra/database';
 
 async function migrations(
-  resquest: NextApiRequest,
+  request: NextApiRequest,
   response: NextApiResponse
 ): Promise<void> {
-  const isMethodAllowed =
-    resquest.method === 'GET' || resquest.method === 'POST';
+  const isMethodAllowed = request.method === 'GET' || request.method === 'POST';
 
   if (isMethodAllowed) {
     const dbClient = await database.getNewClient();
 
     const migrations = await migrationRunner({
       dbClient: dbClient,
-      dryRun: resquest.method === 'GET',
+      dryRun: request.method === 'GET',
       direction: 'up',
       migrationsTable: 'pgmigrations',
       dir: join(process.cwd(), 'infra', 'migrations'),

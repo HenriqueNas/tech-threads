@@ -1,5 +1,5 @@
-import { NextApiRequest, NextApiResponse } from 'next/types';
 import database from '@infra/database';
+import { NextApiRequest, NextApiResponse } from 'next/types';
 
 interface StatusResponse {
   env: typeof process.env.NODE_ENV;
@@ -24,7 +24,7 @@ async function status(
   const serverVersionResult = queryServerVersion.rows[0].server_version;
 
   const queryMaxConnections = await database.query('SHOW max_connections;');
-  const maxConnextionsResult = queryMaxConnections.rows[0].max_connections;
+  const maxConnectionsResult = queryMaxConnections.rows[0].max_connections;
 
   const databaseName = process.env.POSTGRES_DB;
 
@@ -40,7 +40,7 @@ async function status(
   const databaseStatus: DatabaseStatusResponse = {
     status: 'helthly',
     opened_connections: Number(openedConnectionsResult),
-    max_connections: Number(maxConnextionsResult),
+    max_connections: Number(maxConnectionsResult),
     version: serverVersionResult.toString(),
   };
 
@@ -52,4 +52,4 @@ async function status(
 }
 
 export default status;
-export type { StatusResponse, DatabaseStatusResponse };
+export type { DatabaseStatusResponse, StatusResponse };
