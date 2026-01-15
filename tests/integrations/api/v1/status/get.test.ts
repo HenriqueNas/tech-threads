@@ -1,5 +1,5 @@
+import { beforeAll, describe, expect, test } from '@jest/globals';
 import { DatabaseStatusResponse, StatusResponse } from '@v1/status';
-import { beforeAll, expect, test, describe } from '@jest/globals';
 
 describe('GET /api/v1/status', () => {
   var response: Response;
