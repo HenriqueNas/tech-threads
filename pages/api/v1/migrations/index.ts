@@ -5,14 +5,21 @@ import { join } from 'node:path';
 
 import database from '@infra/database';
 
+const allowedMethods = ['GET', 'POST'];
+
 async function migrations(
   request: NextApiRequest,
   response: NextApiResponse
 ): Promise<void> {
-  const isMethodAllowed = request.method === 'GET' || request.method === 'POST';
+  if (!request.method || !allowedMethods.includes(request.method)) {
+    response.status(405).end();
+    return;
+  }
 
-  if (isMethodAllowed) {
-    const dbClient = await database.getNewClient();
+  let dbClient;
+
+  try {
+    dbClient = await database.getNewClient();
 
     const migrations = await migrationRunner({
       dbClient: dbClient,
@@ -23,13 +30,14 @@ async function migrations(
       log: () => {},
     });
 
-    dbClient.end();
-
     const statusCode = migrations.length > 0 ? 201 : 200;
     response.status(statusCode).json(migrations);
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    response.status(500).json({ error: errorMessage });
+  } finally {
+    dbClient?.end();
   }
-
-  response.status(405).end();
 }
 
 export default migrations;
