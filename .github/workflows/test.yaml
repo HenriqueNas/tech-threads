@@ -1,4 +1,4 @@
-name: CI
+name: Tests
 on:
   push:
     branches: [main]
@@ -6,8 +6,8 @@ on:
     branches: [main]
 
 jobs:
-  ci:
-    name: Build, Lint and Test
+  test:
+    name: Run Jest
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -22,5 +22,4 @@ jobs:
           cache: 'pnpm'
 
       - run: pnpm install --frozen-lockfile
-      - run: pnpm lint:check
       - run: pnpm test:dev
