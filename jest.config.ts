@@ -1,7 +1,6 @@
+import dotenv from 'dotenv';
 import type { Config } from 'jest';
 import nextJest from 'next/jest.js';
-
-import dotenv from 'dotenv';
 
 dotenv.config({ path: ['.env', '.env.development'] });
 

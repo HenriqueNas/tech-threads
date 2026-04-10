@@ -1,11 +1,11 @@
-import { beforeAll, describe, expect, test } from '@jest/globals';
-
 import database from '@infra/database';
+import { beforeAll, describe, expect } from '@jest/globals';
+
 import { resetDatabase } from '../../../../setup';
 
 describe('POST /api/v1/migrations', () => {
-  var response: Response;
-  var body: any;
+  let response: Response;
+  let body: unknown;
 
   beforeAll(async () => {
     await resetDatabase();
@@ -16,16 +16,16 @@ describe('POST /api/v1/migrations', () => {
     body = await response.json();
   });
 
-  test('should return status 201', () => {
+  it('should return status 201', () => {
     expect(response.status).toEqual(201);
   });
 
-  test('body should be an array greater than 0', () => {
+  it('body should be an array greater than 0', () => {
     expect(Array.isArray(body)).toBeTruthy();
-    expect(body.length).toBeGreaterThan(0);
+    expect((body as []).length).toBeGreaterThan(0);
   });
 
-  test('database should have a table named `pgmigrations` with at least one migration', async () => {
+  it('database should have a table named `pgmigrations` with at least one migration', async () => {
     const { rows: migrations } = await database.query(
       'SELECT * FROM pgmigrations'
     );
