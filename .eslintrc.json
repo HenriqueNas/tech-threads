@@ -13,7 +13,7 @@
   ],
   "rules": {
     "prettier/prettier": "error",
-    "no-console": "warn",
+    "no-console": "off",
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
     "unused-imports/no-unused-imports": "error",
@@ -28,7 +28,7 @@
       "files": [
         "**/__tests__/**/*.[jt]s?(x)",
         "**/?(*.)+(spec|test).[jt]s?(x)",
-        "tests/**/*.[jt]s?(x)"
+        "./tests/**/*.[jt]s?(x)"
       ],
       "extends": ["plugin:jest/recommended", "plugin:testing-library/react"],
       "plugins": ["jest", "testing-library"],
@@ -40,7 +40,7 @@
         "jest/no-focused-tests": "error",
         "jest/prefer-to-have-length": "warn",
         "testing-library/await-async-queries": "error",
-        "testing-library/no-render-in-setup": "error"
+        "testing-library/no-render-in-lifecycle": "error"
       }
     }
   ]
