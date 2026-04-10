@@ -9,7 +9,7 @@
     "lint:fix": "prettier --write .",
     "test:dev": "concurrently -k -s command-test -c cyan.bold,green.bold -n server,test 'pnpm --silent dev' 'pnpm test:raw'",
     "test:watch": "concurrently -k -c cyan.bold,magenta.bold -n server,test 'pnpm dev' 'pnpm test:raw --watch'",
-    "test:raw": "./scripts/wait-for.sh localhost 3000 && pnpm jest --runInBand",
+    "test:raw": "./scripts/wait-for.sh localhost 3000 15 && pnpm jest --runInBand",
     "services:up": "docker compose -f infra/compose.yaml up -d --wait",
     "services:stop": "docker compose -f infra/compose.yaml stop",
     "services:down": "docker compose -f infra/compose.yaml down",
