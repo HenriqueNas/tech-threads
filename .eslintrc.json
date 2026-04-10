@@ -16,19 +16,32 @@
     "no-console": "warn",
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
-    "no-unused-vars": "off",
-    "@typescript-eslint/no-unused-vars": "off",
     "unused-imports/no-unused-imports": "error",
-    "unused-imports/no-unused-vars": [
+    "@typescript-eslint/no-unused-vars": [
       "warn",
-      {
-        "vars": "all",
-        "varsIgnorePattern": "^_",
-        "args": "after-used",
-        "argsIgnorePattern": "^_"
-      }
+      { "argsIgnorePattern": "^_" }
     ],
-    "@typescript-eslint/no-explicit-any": "warn",
     "react/self-closing-comp": "error"
-  }
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/__tests__/**/*.[jt]s?(x)",
+        "**/?(*.)+(spec|test).[jt]s?(x)",
+        "tests/**/*.[jt]s?(x)"
+      ],
+      "extends": ["plugin:jest/recommended", "plugin:testing-library/react"],
+      "plugins": ["jest", "testing-library"],
+      "env": {
+        "jest/globals": true
+      },
+      "rules": {
+        "jest/consistent-test-it": ["error", { "fn": "it" }],
+        "jest/no-focused-tests": "error",
+        "jest/prefer-to-have-length": "warn",
+        "testing-library/await-async-queries": "error",
+        "testing-library/no-render-in-setup": "error"
+      }
+    }
+  ]
 }
