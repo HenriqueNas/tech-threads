@@ -1,9 +1,8 @@
-import { NextApiRequest, NextApiResponse } from 'next/types';
-
-import migrationRunner from 'node-pg-migrate';
 import { join } from 'node:path';
 
 import database from '@infra/database';
+import { NextApiRequest, NextApiResponse } from 'next/types';
+import migrationRunner from 'node-pg-migrate';
 
 const allowedMethods = ['GET', 'POST'];
 

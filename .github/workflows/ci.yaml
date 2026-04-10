@@ -21,6 +21,21 @@ jobs:
           node-version: 24.x
           cache: 'pnpm'
 
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm lint:check
-      - run: pnpm test:dev
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Format Check
+        run: pnpm format:check
+
+      - name: Type Check
+        run: pnpm type-check
+
+      - name: Lint Check
+        run: pnpm lint:check
+
+      - name: Run Tests
+        run: pnpm test:dev
+
+      - name: Shutdown services
+        if: always()
+        run: pnpm services:stop && pnpm services:down
