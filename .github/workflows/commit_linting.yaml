@@ -1,4 +1,4 @@
-name: CI
+name: Commit Lintintg
 
 on: [push, pull_request]
 
@@ -23,13 +23,13 @@ jobs:
           cache: 'pnpm'
 
       - name: Install commitlint
-        run: npm install -D @commitlint/cli @commitlint/config-conventional
+        run: pnpm install -D @commitlint/cli @commitlint/config-conventional
 
       - name: Print versions
         run: |
           git --version
           node --version
-          npm --version
+          pnpm --version
           npx commitlint --version
 
       - name: Validate current commit (last commit) with commitlint
