@@ -4,30 +4,45 @@ import { beforeAll, describe, expect } from '@jest/globals';
 import { resetDatabase } from '../../../../setup';
 
 describe('GET /api/v1/migrations', () => {
-  let response: Response;
-  let body: unknown;
-
   beforeAll(async () => {
     await resetDatabase();
-
-    response = await fetch('http://localhost:3000/api/v1/migrations');
-    body = await response.json();
   });
 
-  it('should return status 201', () => {
-    expect(response.status).toEqual(201);
-  });
+  describe('Anonymous user', () => {
+    describe('running pending migrations', () => {
+      it('for the first time', async () => {
+        const response = await fetch(
+          'http://localhost:3000/api/v1/migrations',
+          { method: 'GET' }
+        );
+        const body = await response.json();
 
-  it('body should be an array greater than 0', () => {
-    expect(Array.isArray(body)).toBeTruthy();
-    expect((body as []).length).toBeGreaterThan(0);
-  });
+        expect(response.status).toEqual(201);
 
-  it('database should have a table named `pgmigrations` with NO migrations ran', async () => {
-    const { rows: migrations } = await database.query({
-      text: 'SELECT * FROM pgmigrations',
+        expect(Array.isArray(body)).toBeTruthy();
+        expect((body as []).length).toBeGreaterThan(0);
+      });
+
+      it('retrieaving migrations list from database', async () => {
+        const { rows: migrations } = await database.query(
+          'SELECT * FROM pgmigrations'
+        );
+
+        expect(migrations).toHaveLength(0);
+      });
+
+      it('when migrations are already ran before', async () => {
+        const response = await fetch(
+          'http://localhost:3000/api/v1/migrations',
+          { method: 'GET' }
+        );
+        const body = await response.json();
+
+        expect(response.status).toEqual(201);
+
+        expect(Array.isArray(body)).toBeTruthy();
+        expect((body as []).length).toBeGreaterThan(0);
+      });
     });
-
-    expect(migrations).toHaveLength(0);
   });
 });
